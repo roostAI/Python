@@ -1,0 +1,118 @@
+"""Topological Sort."""
+import pytest
+from sorts.topological_sort import topological_sort
+
+class Test_TopologicalSortTopologicalSort:
+    """Test suite for the topological_sort function."""
+
+    def test_topological_sort_simple_graph(self):
+        """Scenario 1: Basic Topological Sort on a Simple Graph."""
+        vertices = ['A', 'B', 'C']
+        edges = {'A': ['B'], 'B': ['C'], 'C': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result == ['C', 'B', 'A']
+
+    def test_topological_sort_multiple_starting_points(self):
+        """Scenario 2: Topological Sort with Multiple Starting Points."""
+        vertices = ['A', 'B', 'C', 'D']
+        edges = {'A': ['B'], 'B': ['C'], 'D': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result in (['C', 'B', 'A', 'D'], ['D', 'C', 'B', 'A'], ['C', 'B', 'D', 'A'])
+
+    def test_topological_sort_nodes_with_no_outgoing_edges(self):
+        """Scenario 3: Topological Sort with Nodes Having No Outgoing Edges."""
+        vertices = ['A', 'B', 'C']
+        edges = {'A': ['B'], 'B': [], 'C': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result in (['B', 'A', 'C'], ['C', 'B', 'A'])
+
+    def test_topological_sort_complex_dependencies(self):
+        """Scenario 4: Topological Sort with More Complex Dependencies."""
+        vertices = ['A', 'B', 'C', 'D', 'E']
+        edges = {'A': ['B', 'C'], 'B': ['D'], 'C': ['D'], 'D': ['E'], 'E': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result in (['E', 'D', 'B', 'C', 'A'], ['E', 'D', 'C', 'B', 'A'])
+
+    def test_topological_sort_empty_graph(self):
+        """Scenario 5: Empty Graph."""
+        vertices = []
+        edges = {}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('', visited, sort)
+        assert result == []
+
+    def test_topological_sort_self_loop(self):
+        """Scenario 6: Graph with Self-Loop (Invalid Input - Not a DAG)."""
+        vertices = ['A', 'B']
+        edges = {'A': ['A', 'B'], 'B': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result is not None  # Could return something, or throw error (depends on implementation)
+
+    def test_topological_sort_disconnected_component(self):
+        """Scenario 7: Graph with a Disconnected Component."""
+        vertices = ['A', 'B', 'C', 'D']
+        edges = {'A': ['B'], 'B': [], 'C': ['D'], 'D': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result in (['B', 'A', 'D', 'C'], ['B', 'A', 'C', 'D'])
+
+    def test_topological_sort_large_graph(self):
+        """Scenario 8: Large Graph."""
+        vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        edges = {'A': ['B', 'C'], 'B': ['D'], 'C': ['E'], 'D': ['F'], 'E': ['G'], 'F': ['H'], 'G': ['I'], 'H': ['J'], 'I': [], 'J': []}
+        visited = []
+        sort = []
+        # TODO: Replace the following line with the correct assignment.
+        global vertices
+        global edges
+        vertices = vertices
+        edges = edges
+        result = topological_sort('A', visited, sort)
+        assert result == ['I', 'J', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A']
