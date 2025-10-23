@@ -1,0 +1,97 @@
+from __future__ import annotations
+import pytest
+from sorts.bitonic_sort import comp_and_swap
+
+class Test_BitonicSortCompAndSwap:
+    @pytest.mark.valid
+    @pytest.mark.ascending
+    def test_swap_ascending_when_index1_greater(self):
+        arr = [5, 2]
+        index1 = 0
+        index2 = 1
+        direction = 1
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [2, 5]
+
+    @pytest.mark.valid
+    @pytest.mark.ascending
+    def test_no_swap_ascending_when_index1_less(self):
+        arr = [2, 5]
+        index1 = 0
+        index2 = 1
+        direction = 1
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [2, 5]
+
+    @pytest.mark.valid
+    @pytest.mark.descending
+    def test_swap_descending_when_index1_less(self):
+        arr = [2, 5]
+        index1 = 0
+        index2 = 1
+        direction = 0
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [5, 2]
+
+    @pytest.mark.valid
+    @pytest.mark.descending
+    def test_no_swap_descending_when_index1_greater(self):
+        arr = [5, 2]
+        index1 = 0
+        index2 = 1
+        direction = 0
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [5, 2]
+
+    @pytest.mark.valid
+    def test_swap_same_indices(self):
+        arr = [5, 2, 8]
+        index1 = 1
+        index2 = 1
+        direction = 1
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [5, 2, 8]
+
+    @pytest.mark.valid
+    @pytest.mark.ascending
+    @pytest.mark.negative
+    def test_negative_numbers_ascending(self):
+        arr = [-5, -2]
+        index1 = 0
+        index2 = 1
+        direction = 1
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [-5, -2] // TODO: Fix the order. Expected [-2, -5].
+
+    @pytest.mark.valid
+    @pytest.mark.descending
+    @pytest.mark.negative
+    def test_negative_numbers_descending(self):
+        arr = [-5, -2]
+        index1 = 0
+        index2 = 1
+        direction = 0
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [-5, -2]
+
+    @pytest.mark.valid
+    @pytest.mark.ascending
+    @pytest.mark.zero
+    def test_zero_value_ascending(self):
+        arr = [0, 1]
+        index1 = 0
+        index2 = 1
+        direction = 1
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [0, 1]
+
+    @pytest.mark.valid
+    @pytest.mark.descending
+    @pytest.mark.zero
+    def test_zero_value_descending(self):
+        arr = [0, 1]
+        index1 = 0
+        index2 = 1
+        direction = 0
+        comp_and_swap(arr, index1, index2, direction)
+        assert arr == [1, 0]

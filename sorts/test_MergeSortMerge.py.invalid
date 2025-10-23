@@ -1,0 +1,74 @@
+import pytest
+
+# Assuming the merge function is in a file named merge_sort.py in a 'sorts' directory
+# and the function is correctly implemented there.  If it is not present the code will fail at runtime.
+# This correction addresses the import error by assuming that the merge_sort.py file contains the merge function.
+try:
+    from sorts.merge_sort import merge
+except ImportError:
+    # If the merge function isn't importable, you'll need to create the merge_sort.py file
+    # and define the merge function within it.
+    # For now, if the import fails, the tests will fail too, but at least the file structure
+    # is set up to allow the tests to run if the merge function is present.
+    # Example for merge_sort.py:
+    # def merge(left: list, right: list) -> list:
+    #     result = []
+    #     i, j = 0, 0
+    #     while i < len(left) and j < len(right):
+    #         if left[i] <= right[j]:
+    #             result.append(left[i])
+    #             i += 1
+    #         else:
+    #             result.append(right[j])
+    #             j += 1
+    #     result.extend(left[i:])
+    #     result.extend(right[j:])
+    #     return result
+
+    pass # the tests will fail, which is expected
+
+class Test_MergeSortMerge:
+    @pytest.mark.valid
+    def test_merge_two_sorted_lists(self):
+        left = [1, 3, 5]
+        right = [2, 4, 6]
+        expected = [1, 2, 3, 4, 5, 6]
+        assert merge(left, right) == expected
+
+    @pytest.mark.valid
+    def test_merge_lists_with_duplicates(self):
+        left = [1, 2, 2, 3]
+        right = [2, 3, 4, 4]
+        expected = [1, 2, 2, 2, 3, 3, 4, 4]
+        assert merge(left, right) == expected
+
+    @pytest.mark.valid
+    def test_merge_with_empty_list(self):
+        left = [1, 2, 3]
+        right = []
+        expected = [1, 2, 3]
+        assert merge(left, right) == expected
+        assert merge(right, left) == expected
+
+    @pytest.mark.valid
+    def test_merge_one_list_all_larger(self):
+        left = [1, 2, 3]
+        right = [4, 5, 6]
+        expected = [1, 2, 3, 4, 5, 6]
+        assert merge(left, right) == expected
+        assert merge(right, left) == expected
+
+    @pytest.mark.valid
+    def test_merge_negative_and_positive(self):
+        left = [-3, -1, 1]
+        right = [-2, 0, 2]
+        expected = [-3, -2, -1, 0, 1, 2]
+        assert merge(left, right) == expected
+
+    @pytest.mark.valid
+    def test_merge_unequal_list_sizes(self):
+        left = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        right = [0]
+        expected = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        assert merge(left, right) == expected
+        assert merge(right, left) == expected

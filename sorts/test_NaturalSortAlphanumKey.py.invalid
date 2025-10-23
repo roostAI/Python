@@ -1,0 +1,81 @@
+from __future__ import annotations
+import re
+import doctest
+import pytest
+# Assuming natural_sort.py and its alphanum_key function are in the same directory or accessible via Python's import path.
+# If not, adjust the import statement accordingly.  For example:
+# from .natural_sort import alphanum_key
+# The above assumes natural_sort.py is in a subdirectory named 'sorts' relative to this test file.
+try:
+    from sorts.natural_sort import alphanum_key
+except ImportError:
+    # If the direct import fails, try an alternative path relative to the test file.
+    # This addresses the original error. This assumes the natural_sort.py is present in the `sorts` folder
+    # and sorts folder present along side the tests folder.
+    # The following import statement will make the test pass since the alphanum_key is present.
+    from natural_sort import alphanum_key
+
+
+class Test_NaturalSortAlphanumKey:
+    def test_alphanum_key_basic_mixed_case_and_numbers(self):
+        """
+        Verifies that the function correctly sorts a list of strings containing mixed-case characters and numbers, converting numbers to integers for proper numeric comparison.
+        """
+        input_list = ["file1.txt", "file10.txt", "File2.txt", "file2.txt", "File1.txt"]
+        expected_output = ['File1.txt', 'file1.txt', 'File2.txt', 'file2.txt', 'file10.txt']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
+
+    def test_alphanum_key_leading_zeros(self):
+        """
+        Tests whether the function correctly handles numbers with leading zeros, treating them as equivalent to their non-leading zero counterparts when sorting.
+        """
+        input_list = ["file001.txt", "file01.txt", "file1.txt"]
+        expected_output = ['file1.txt', 'file01.txt', 'file001.txt']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
+
+    def test_alphanum_key_empty_string(self):
+        """
+        Tests the function's behavior when an empty string is provided as input.
+        """
+        input_list = [""]
+        expected_output = ['']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
+
+    def test_alphanum_key_only_numbers(self):
+        """
+        Evaluates the function when sorting strings that consist solely of numbers.
+        """
+        input_list = ["10", "1", "2"]
+        expected_output = ['1', '2', '10']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
+
+    def test_alphanum_key_special_characters(self):
+        """
+        Evaluates the handling of strings that contain special characters, focusing on their treatment relative to alphanumeric components.
+        """
+        input_list = ["file-1.txt", "file.txt", "file_2.txt", "file!3.txt"]
+        expected_output = ['file-1.txt', 'file.txt', 'file_2.txt', 'file!3.txt']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
+
+    def test_alphanum_key_multiple_number_groups(self):
+        """
+        Checks the function's ability to correctly sort strings that have multiple numeric segments within them.
+        """
+        input_list = ["a1b2", "a10b1", "a2b1"]
+        expected_output = ['a1b2', 'a2b1', 'a10b1']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
+
+    def test_alphanum_key_case_insensitive(self):
+        """
+        Assesses that strings with the same alphanumeric content, but with differing cases, are correctly sorted with no preference to case (i.e., case-insensitive).
+        """
+        input_list = ["A1", "a1", "b2", "B2"]
+        expected_output = ['A1', 'a1', 'B2', 'b2']
+        sorted_list = sorted(input_list, key=alphanum_key)
+        assert sorted_list == expected_output
